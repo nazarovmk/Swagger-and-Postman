@@ -2,8 +2,10 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
 import { useState } from "react";
+import { useCollection } from "../hooks/useCollection";
 
 function Home() {
+  const { data } = useCollection("users");
   const [activeTab, setActiveTab] = useState("Dashboard");
   return (
     <div className="flex h-screen bg-gray-100">
