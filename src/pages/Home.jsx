@@ -1,23 +1,80 @@
+"use client";
+
 import { LuLayoutDashboard } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
 import { useState } from "react";
 import { useCollection } from "../hooks/useCollection";
+import { useSelector } from "react-redux";
 
 function Home() {
-  const { data } = useCollection("users");
+  const { data: users, isLoading } = useCollection("users");
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const { user } = useSelector((state) => state.user);
+
+  const getTabContent = () => {
+    switch (activeTab) {
+      case "Dashboard":
+        return (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">
+              Welcome to your Dashboard
+            </h2>
+            <p className="text-gray-600">
+              Hello {user?.displayName}, this is your personal dashboard where
+              you can manage your account and activities.
+            </p>
+
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <h3 className="font-semibold text-lg mb-2">
+                Your Account Details
+              </h3>
+              <p>
+                <span className="font-medium">Email:</span> {user?.email}
+              </p>
+              <p>
+                <span className="font-medium">Display Name:</span>{" "}
+                {user?.displayName}
+              </p>
+            </div>
+          </div>
+        );
+      case "Create":
+        return (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">Create New Content</h2>
+            <p className="text-gray-600">
+              This is where you can create new content.
+            </p>
+          </div>
+        );
+      case "Settings":
+        return (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
+            <p className="text-gray-600">Manage your account settings here.</p>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <aside className="w-55 bg-green-200 flex flex-col pt-8 pb-5">
         <div className="flex flex-col items-center">
           <img
-            src="https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png?v=2025030913"
+            src={
+              user?.photoURL ||
+              "https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png?v=2025030913"
+            }
             alt="User Avatar"
             className="w-12 h-12 rounded-full mb-1"
           />
-          <span className="text-lg font-semibold">Hello, Nazarov</span>
+          <span className="text-lg font-semibold">
+            Hello, {user?.displayName}
+          </span>
         </div>
         <nav className="mt-15 ml-auto">
           <ul className="pl-10">
@@ -56,26 +113,43 @@ function Home() {
           </ul>
         </nav>
       </aside>
-      {/* Sidebar */}
 
-      {/* Main Content */}
-      <main className="flex-1 p-6"></main>
-      {/* Main Content */}
+      <main className="flex-1 p-6">{getTabContent()}</main>
 
-      {/* Users Panel */}
+      {/* Right Sidebar - Users List */}
       <aside className="w-64 bg-green-200 p-4">
         <h2 className="font-bold text-lg">Users:</h2>
-        <ul className="mt-4 space-y-2">
-          <li className="p-2 bg-white rounded-lg flex items-center">
-            <img
-              src="https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png?v=2025030913"
-              alt="User Avatar"
-              className="w-8 h-8 rounded-full"
-            />
-            <span className="ml-2">Nazarov</span>
-          </li>
-        </ul>
-        {/* Users Panel */}
+        {isLoading ? (
+          <div className="mt-4 text-center">Loading users...</div>
+        ) : (
+          <ul className="mt-4 space-y-2">
+            {users && users.length > 0 ? (
+              users.map((userData) => (
+                <li
+                  key={userData.id}
+                  className="p-2 bg-white rounded-lg flex items-center"
+                >
+                  <img
+                    src={
+                      userData.photoURL ||
+                      "https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png?v=2025030913"
+                    }
+                    alt={`${userData.displayName}'s Avatar`}
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="ml-2">{userData.displayName}</span>
+                  {userData.isOnline && (
+                    <span className="ml-auto w-2 h-2 bg-green-500 rounded-full"></span>
+                  )}
+                </li>
+              ))
+            ) : (
+              <li className="p-2 bg-white rounded-lg text-center">
+                No users found
+              </li>
+            )}
+          </ul>
+        )}
       </aside>
     </div>
   );

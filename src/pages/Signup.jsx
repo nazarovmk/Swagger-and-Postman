@@ -1,8 +1,20 @@
-import { NavLink } from "react-router-dom";
+"use client";
+
+import { NavLink, useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
+import { useEffect } from "react";
 
 function Signup() {
-  const { isPending, register, user } = useRegister();
+  const { isPending, register, user, error } = useRegister();
+  const navigate = useNavigate();
+
+  // Redirect if registration is successful
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   const handleRegister = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -23,6 +35,12 @@ function Signup() {
           />
           <h1 className="text-3xl font-bold mb-4">Signup</h1>
         </div>
+
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleRegister} className="flex flex-col space-y-4">
           <div>
@@ -57,19 +75,21 @@ function Signup() {
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
               className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
-          {isPending && <button disabled>Loading...</button>}
-          {!isPending && (
-            <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-              Signup
-            </button>
-          )}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
+          >
+            {isPending ? "Loading..." : "Signup"}
+          </button>
 
           <button
             type="button"
-            className="btn bg-white text-black border-[#e5e5e5]"
+            className="w-full bg-white text-black border py-2 rounded-lg hover:bg-gray-100 flex items-center justify-center space-x-2"
           >
             <svg
               aria-label="Google logo"
@@ -98,17 +118,19 @@ function Signup() {
                 ></path>
               </g>
             </svg>
-            Login with Google
+            <span>Login with Google</span>
           </button>
         </form>
 
         <p className="text-center mt-4 text-sm">
           If you have an account, please{" "}
-          <a href="/login" className="text-blue-500 underline">
+          <NavLink to="/login" className="text-blue-500 underline">
             Login
-          </a>
+          </NavLink>
         </p>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink to="/" className="text-center text-blue-500 mt-2">
+          Home
+        </NavLink>
       </div>
     </div>
   );

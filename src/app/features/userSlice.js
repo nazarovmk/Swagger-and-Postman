@@ -1,25 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
-  isAuthReady: true,
+  user: JSON.parse(localStorage.getItem("user")) || null, // ✅ Foydalanuvchini localStorage dan olish
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, { payload }) => {
-      state.user = payload;
+    login: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload)); // ✅ LocalStorage-ga saqlash
     },
-    logOut: (state, { payload }) => {
+    logOut: (state) => {
       state.user = null;
-    },
-    authIsReady: (state) => {
-      state.isAuthReady = false;
+      localStorage.removeItem("user"); // ✅ LocalStorage-dan o‘chirish
     },
   },
 });
 
-export const { login, logOut, authIsReady } = userSlice.actions;
+export const { login, logOut } = userSlice.actions;
 export default userSlice.reducer;
