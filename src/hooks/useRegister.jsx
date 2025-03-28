@@ -3,7 +3,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase/config";
-import { useFireStore } from "../hooks/useFireStore";
+import { useFireStore } from "./useFireStore";
 import { login } from "../app/features/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -28,16 +28,14 @@ export const useRegister = () => {
 
       const user = req.user;
 
-      // Dispatch login action to Redux
       dispatch(login(user));
 
-      // Add user to Firestore
       await addUser({
         displayName: user.displayName,
         email: user.email,
         isOnline: true,
         photoURL: user.photoURL,
-        uid: user.uid, // Make sure to include the user ID
+        uid: user.uid,
       });
 
       setUser(user);

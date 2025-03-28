@@ -6,6 +6,7 @@ import { IoIosSettings } from "react-icons/io";
 import { useState } from "react";
 import { useCollection } from "../hooks/useCollection";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 function Home() {
   const { data: users, isLoading } = useCollection("users");
@@ -16,27 +17,35 @@ function Home() {
     switch (activeTab) {
       case "Dashboard":
         return (
-          <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
-            <h2 className="text-2xl font-bold mb-4">
-              Welcome to your Dashboard
-            </h2>
-            <p className="text-gray-300">
-              Hello {user?.displayName}, this is your personal dashboard where
-              you can manage your account and activities.
-            </p>
-            <div className="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700">
-              <h3 className="font-semibold text-lg mb-2">
-                Your Account Details
-              </h3>
-              <p>
-                <span className="font-medium">Email:</span> {user?.email}
-              </p>
-              <p>
-                <span className="font-medium">Display Name:</span>{" "}
-                {user?.displayName}
-              </p>
+          <>
+            <div className="flex items-center justify-between p-4">
+              <h2>Home</h2>
+              <NavLink className={"btn btn-primary"} to="/login">
+                Login
+              </NavLink>
             </div>
-          </div>
+            <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
+              <h2 className="text-2xl font-bold mb-4">
+                Welcome to your Dashboard
+              </h2>
+              <p className="text-gray-300">
+                Hello {user?.displayName}, this is your personal dashboard where
+                you can manage your account and activities.
+              </p>
+              <div className="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700">
+                <h3 className="font-semibold text-lg mb-2">
+                  Your Account Details
+                </h3>
+                <p>
+                  <span className="font-medium">Email:</span> {user?.email}
+                </p>
+                <p>
+                  <span className="font-medium">Display Name:</span>
+                  {user?.displayName}
+                </p>
+              </div>
+            </div>
+          </>
         );
       case "Create":
         return (
