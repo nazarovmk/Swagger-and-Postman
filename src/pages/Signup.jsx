@@ -25,8 +25,8 @@ function Signup() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
-      <div className="flex flex-col w-[400px] p-6 rounded-lg shadow-lg bg-white">
+    <div className="h-screen flex items-center justify-center bg-black">
+      <div className="flex flex-col w-[400px] p-6 rounded-lg shadow-lg bg-gray-900 text-white">
         <div className="flex flex-col items-center">
           <img
             src="https://cdn-icons-png.flaticon.com/512/10423/10423409.png"
@@ -37,7 +37,7 @@ function Signup() {
         </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-500 border border-red-700 text-white px-4 py-3 rounded mb-4">
             {error}
           </div>
         )}
@@ -48,7 +48,7 @@ function Signup() {
             <input
               type="text"
               placeholder="Type here"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-700 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 text-white"
               required
               name="displayName"
             />
@@ -59,7 +59,7 @@ function Signup() {
             <input
               type="email"
               placeholder="Type here"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-700 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 text-white"
               required
               name="email"
             />
@@ -74,7 +74,7 @@ function Signup() {
               minLength="8"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-gray-700 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 text-white"
               required
             />
           </div>
@@ -82,14 +82,14 @@ function Signup() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
+            className="w-full bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-600 disabled:bg-gray-500"
           >
             {isPending ? "Loading..." : "Signup"}
           </button>
 
           <button
             type="button"
-            className="w-full bg-white text-black border py-2 rounded-lg hover:bg-gray-100 flex items-center justify-center space-x-2"
+            className="w-full bg-gray-800 text-white border border-gray-700 py-2 rounded-lg hover:bg-gray-700 flex items-center justify-center space-x-2"
           >
             <svg
               aria-label="Google logo"
@@ -123,14 +123,11 @@ function Signup() {
         </form>
 
         <p className="text-center mt-4 text-sm">
-          If you have an account, please{" "}
-          <NavLink to="/login" className="text-blue-500 underline">
+          If you have an account, please
+          <NavLink to="/login" className="text-blue-400 underline">
             Login
           </NavLink>
         </p>
-        <NavLink to="/" className="text-center text-blue-500 mt-2">
-          Home
-        </NavLink>
       </div>
     </div>
   );

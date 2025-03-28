@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null, // ✅ Foydalanuvchini localStorage dan olish
+  user: null, // LocalStorage ishlatilmaydi, boshlang‘ich qiymat `null`
 };
 
 const userSlice = createSlice({
@@ -10,11 +10,9 @@ const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload)); // ✅ LocalStorage-ga saqlash
     },
     logOut: (state) => {
       state.user = null;
-      localStorage.removeItem("user"); // ✅ LocalStorage-dan o‘chirish
     },
   },
 });

@@ -16,16 +16,15 @@ function Home() {
     switch (activeTab) {
       case "Dashboard":
         return (
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
             <h2 className="text-2xl font-bold mb-4">
               Welcome to your Dashboard
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-300">
               Hello {user?.displayName}, this is your personal dashboard where
               you can manage your account and activities.
             </p>
-
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+            <div className="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700">
               <h3 className="font-semibold text-lg mb-2">
                 Your Account Details
               </h3>
@@ -41,18 +40,18 @@ function Home() {
         );
       case "Create":
         return (
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
             <h2 className="text-2xl font-bold mb-4">Create New Content</h2>
-            <p className="text-gray-600">
+            <p className="text-gray-300">
               This is where you can create new content.
             </p>
           </div>
         );
       case "Settings":
         return (
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
             <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
-            <p className="text-gray-600">Manage your account settings here.</p>
+            <p className="text-gray-300">Manage your account settings here.</p>
           </div>
         );
       default:
@@ -61,8 +60,8 @@ function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <aside className="w-55 bg-green-200 flex flex-col pt-8 pb-5">
+    <div className="flex h-screen bg-black">
+      <aside className="w-55 bg-gray-900 flex flex-col pt-8 pb-5 text-white">
         <div className="flex flex-col items-center">
           <img
             src={
@@ -76,12 +75,12 @@ function Home() {
             Hello, {user?.displayName}
           </span>
         </div>
-        <nav className="mt-15 ml-auto">
+        <nav className="mt-15">
           <ul className="pl-10">
             <li
               className={`p-2 rounded-tl-lg rounded-bl-lg flex items-center gap-2 cursor-pointer ${
                 activeTab === "Dashboard"
-                  ? "bg-gray-500 pr-[70px] text-white"
+                  ? "bg-gray-700 pr-[70px] text-white"
                   : ""
               }`}
               onClick={() => setActiveTab("Dashboard")}
@@ -91,24 +90,22 @@ function Home() {
             <li
               className={`p-2 rounded-tl-lg rounded-bl-lg flex items-center gap-2 cursor-pointer ${
                 activeTab === "Create"
-                  ? "bg-gray-500 pr-[100px] text-white"
+                  ? "bg-gray-700 pr-[100px] text-white"
                   : ""
               }`}
               onClick={() => setActiveTab("Create")}
             >
-              <IoMdAddCircleOutline />
-              Create
+              <IoMdAddCircleOutline /> Create
             </li>
             <li
               className={`p-2 rounded-tl-lg rounded-bl-lg flex items-center gap-2 cursor-pointer ${
                 activeTab === "Settings"
-                  ? "bg-gray-500 pr-[80px] text-white"
+                  ? "bg-gray-700 pr-[80px] text-white"
                   : ""
               }`}
               onClick={() => setActiveTab("Settings")}
             >
-              <IoIosSettings />
-              Settings
+              <IoIosSettings /> Settings
             </li>
           </ul>
         </nav>
@@ -117,17 +114,17 @@ function Home() {
       <main className="flex-1 p-6">{getTabContent()}</main>
 
       {/* Right Sidebar - Users List */}
-      <aside className="w-64 bg-green-200 p-4">
+      <aside className="w-64 bg-gray-900 p-4 text-white">
         <h2 className="font-bold text-lg">Users:</h2>
         {isLoading ? (
-          <div className="mt-4 text-center">Loading users...</div>
+          <div className="mt-4 text-center text-gray-400">Loading users...</div>
         ) : (
           <ul className="mt-4 space-y-2">
             {users && users.length > 0 ? (
               users.map((userData) => (
                 <li
                   key={userData.id}
-                  className="p-2 bg-white rounded-lg flex items-center"
+                  className="p-2 bg-gray-800 rounded-lg flex items-center"
                 >
                   <img
                     src={
@@ -144,7 +141,7 @@ function Home() {
                 </li>
               ))
             ) : (
-              <li className="p-2 bg-white rounded-lg text-center">
+              <li className="p-2 bg-gray-800 rounded-lg text-center text-gray-400">
                 No users found
               </li>
             )}
